@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Info"
+    android:orientation="vertical"
+    android:background="#191414"
+>
+
+    <TextView
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="- What is Statsify?"
+        android:textColor="#1DB954"
+        android:textSize="20dp"/>
+
+
+
+        <TextView
+            android:fontFamily="sans-serif"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Statsify is a statistics app that allows Spotify users to view detailed information about their listening habits, including their most played songs, and artists."
+            android:textColor="@color/white"
+            android:textSize="16dp"/>
+
+    <TextView
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="- How do we get your data?"
+        android:textColor="#1DB954"
+        android:textSize="20dp"/>
+
+
+
+    <TextView
+        android:fontFamily="sans-serif"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="We use Spotify's Web API to display your listening history, define your top genres. By logging in with your Spotify account, we get access to this data securely trough Spotify themselves."
+        android:textColor="@color/white"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="- Is my data getting saved somewhere?"
+        android:textColor="#1DB954"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:fontFamily="sans-serif"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Yes! We securely save your data on our Firebase database (firebase.google.com) to make sure we can show you your past statistics once you enter Statsify again at a further date. Don't worry, we do not have anything personal about you but your music taste :)"
+        android:textColor="@color/white"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="- What is Basic Mode?"
+        android:textColor="#1DB954"
+        android:textSize="20dp"/>
+
+
+
+    <TextView
+        android:fontFamily="sans-serif"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Basic Mode allows you to see your current statistics without comparing it to recent logins to Statsify, but instead to different timepieces. last 3 months, last 6 months and also all-time statistics. To enable/disable, simply head to settings and toggle it on/off."
+        android:textColor="@color/white"
+        android:textSize="16dp"/>
+
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

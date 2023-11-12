@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomSpinnerStyle" parent="Widget.AppCompat.Spinner">
+        <item name="android:textColor">#1DB954</item> <!-- Replace with your desired color -->
+        <!-- Add any other desired style attributes -->
+    </style>
+
+    <style name="CustomGridStyle">
+        <item name="android:textColor">#1DB954</item> <!-- Replace with your desired color -->
+        <!-- Add any other desired style attributes -->
+    </style>
+
+</resources>

@@ -1,0 +1,339 @@
+@startuml
+class com.example.statsify.MainActivity {
+~ int REQUEST_CODE
+~ String REDIRECT_URI
+~ String CLIENT_ID
+~ String SCOPES
+~ AuthenticationHandler authHandler
+~ Animation animFadeIn
+~ TextView textFadeIn
+~ Button myButton
+~ SharedPreferences sp
+- SharedPreferences sharedPreferences
+- {static} String CHANNEL_ID
+# void onCreate(Bundle)
+- void checkLastOpenDate()
+- void showNotification()
++ boolean onCreateOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
++ void onClick(View)
+# void onActivityResult(int,int,Intent)
+}note left of com.example.statsify.MainActivity::REQUEST_CODE
+ Request code will be used to verify if result comes from the login activity. Can be set to any integer.
+end note
+note left of com.example.statsify.MainActivity::onCreate(Bundle)
+
+     * Called when the activity is created. Initializes the UI components and sets click listeners.
+     
+end note
+note right of com.example.statsify.MainActivity::onCreateOptionsMenu(Menu)
+
+     * Creates the options menu for the activity.
+     *
+     * @param menu The menu to inflate.
+     * @return true if the menu was successfully inflated, false otherwise.
+     
+end note
+note left of com.example.statsify.MainActivity::onOptionsItemSelected(MenuItem)
+
+     * Handles menu item selection.
+     *
+     * @param item The selected menu item.
+     * @return true if the menu item was handled, false otherwise.
+     
+end note
+note right of com.example.statsify.MainActivity::onClick(View)
+
+     * Handles button click events.
+     *
+     * @param v The clicked view.
+     
+end note
+note left of com.example.statsify.MainActivity::onActivityResult(int,int,Intent)
+
+     * Handles the result of the authentication flow.
+     *
+     * @param requestCode The request code.
+     * @param resultCode  The result code.
+     * @param intent      The result intent.
+     
+end note
+
+class com.example.statsify.Info {
+~ LinearLayout q1Layout
+~ Button q1btn
+# void onCreate(Bundle)
++ boolean onCreateOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
+}note left of com.example.statsify.Info::onCreateOptionsMenu(Menu)
+
+     * Inflates the menu resource file to display the options menu.
+     *
+     * @param menu The menu instance to inflate.
+     * @return true to display the menu, false otherwise.
+     
+end note
+note right of com.example.statsify.Info::onOptionsItemSelected(MenuItem)
+
+     * Handles the selection of an item from the options menu.
+     *
+     * @param item The selected menu item.
+     * @return true to indicate that the selection has been handled, false otherwise.
+     
+end note
+
+class com.example.statsify.RequestsHandler {
++ String BASE_ENDPOINT
+- SharedPreferences sharedPreferences
++ <<Create>> RequestsHandler(Context)
+# String doInBackground(String)
+# String[] getUsernameAndId(String)
+# List<String> getTopTracks(String,String)
+# List<String> getTopArtists(String,String)
++ void saveToDatabase(String,String,String)
+}note left of com.example.statsify.RequestsHandler::RequestsHandler(Context)
+
+     * Constructs a RequestsHandler object.
+     *
+     * @param context The context of the application.
+     
+end note
+note right of com.example.statsify.RequestsHandler::doInBackground(String)
+
+     * Executes the request in the background.
+     *
+     * @param strings An array of strings containing the token, item, and time_range.
+     * @return The display name of the user.
+     
+end note
+note left of com.example.statsify.RequestsHandler::getUsernameAndId(String)
+
+     * Retrieves the username and ID of the user.
+     *
+     * @param token The Spotify access token.
+     * @return An array of strings containing the user ID and display name.
+     
+end note
+note right of com.example.statsify.RequestsHandler::getTopTracks(String,String)
+
+     * Retrieves the user's top tracks.
+     *
+     * @param token      The Spotify access token.
+     * @param time_range The time range for the top tracks.
+     * @return An ArrayList of strings containing the names of the top tracks.
+     
+end note
+note left of com.example.statsify.RequestsHandler::getTopArtists(String,String)
+
+     * Retrieves the user's top artists.
+     *
+     * @param token      The Spotify access token.
+     * @param time_range The time range for the top artists.
+     * @return An ArrayList of strings containing the names of the top artists.
+     
+end note
+note right of com.example.statsify.RequestsHandler::saveToDatabase(String,String,String)
+
+     * Saves user data to the Firebase database.
+     *
+     * @param user_id      The user's ID.
+     * @param display_name The user's display name.
+     * @param token        The Spotify access token.
+     
+end note
+
+class com.example.statsify.User {
+- String displayName
+- String Id
+- Map<String,String[]> stats
++ <<Create>> User(String,String,HashMap<String,String[]>)
++ String getDisplayName()
++ String getId()
++ void setId(String)
++ void setDisplayName(String)
++ void setMyDict(Map<String,String[]>)
++ String[] getValuesForKey(String)
++ void addValueForKey(String,String)
++ void removeValueForKey(String,String)
+}
+class com.example.statsify.Settings {
+- Switch switchButton
+- SharedPreferences sharedPreferences
+# void onCreate(Bundle)
+- void updateSwitchState(boolean)
+}
+note left of com.example.statsify.Settings::updateSwitchState(boolean)
+
+     * Update the switch state in SharedPreferences
+     *
+     * @param isChecked The new switch state
+     
+end note
+
+class com.example.statsify.LoggedIn {
+~ SharedPreferences sp
+~ SharedPreferences.Editor editor
+- Spinner dateSpinner
+- String selectedDate
+- GridView gridView1
+- GridView gridView2
+- ArrayAdapter<String> adapter1
+- ArrayAdapter<String> adapter2
+- List<String> topItems1
+- List<String> topItems2
+- DatabaseReference databaseReference
++ String pushDataToFirebase(String)
++ {static} List<String> formatDates(List<String>)
++ {static} String formatDate(String)
++ List<String> filterDates(List<String>)
++ void putInSpinner(List<String>)
+- void onDateSelected(String)
+- void updateGrids(String,String)
++ void updateGridsBasicMode(String,String,String)
++ {static} String getCurrentDate()
++ CompletableFuture<List<String>[]> getDataByDate(String,String)
++ {static} List<String>[] cutLists(List<String>[])
++ List<String> formatList(List<String>)
++ boolean onCreateOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
+# void onCreate(Bundle)
+}
+note left of com.example.statsify.LoggedIn::pushDataToFirebase(String)
+
+     * Pushes the data to Firebase using the provided token.
+     *
+     * @param token The token to use for authentication.
+     * @return The result of the data push.
+     
+end note
+note right of com.example.statsify.LoggedIn::formatDates(List<String>)
+
+     * Formats a list of dates from "_"-formatted to "/"-formatted.
+     *
+     * @param dates The list of dates to format.
+     * @return The formatted list of dates.
+     
+end note
+note left of com.example.statsify.LoggedIn::formatDate(String)
+
+     * Formats a date from "/"-formatted to "_"-formatted.
+     *
+     * @param date The date to format.
+     * @return The formatted date.
+     
+end note
+note right of com.example.statsify.LoggedIn::filterDates(List<String>)
+
+     * Filters a list of dates to include only dates with at least one week between them.
+     *
+     * @param dates The list of dates to filter.
+     * @return The filtered list of dates.
+     
+end note
+note left of com.example.statsify.LoggedIn::putInSpinner(List<String>)
+
+     * Sets up the spinner with the provided list of dates.
+     *
+     * @param dates The list of dates to populate the spinner with.
+     
+end note
+note right of com.example.statsify.LoggedIn::onDateSelected(String)
+
+     * Handles the selection of a date from the spinner.
+     *
+     * @param date The selected date.
+     
+end note
+note left of com.example.statsify.LoggedIn::updateGrids(String,String)
+
+     * Updates the grid views with data for the specified user ID and date.
+     *
+     * @param userId The user ID.
+     * @param date   The date.
+     
+end note
+note right of com.example.statsify.LoggedIn::getCurrentDate()
+
+     * Returns the current date formatted as "dd_MM_yyyy".
+     *
+     * @return The current date.
+     
+end note
+note left of com.example.statsify.LoggedIn::getDataByDate(String,String)
+
+     * Retrieves data from the database for the specified user ID and date.
+     *
+     * @param userId The user ID.
+     * @param date   The date.
+     * @return A CompletableFuture with the retrieved data.
+     
+end note
+note right of com.example.statsify.LoggedIn::cutLists(List<String>[])
+
+     * Cuts the lists to contain only the first 5 elements.
+     *
+     * @param lists The lists to cut.
+     * @return The cut lists.
+     
+end note
+note left of com.example.statsify.LoggedIn::formatList(List<String>)
+
+     * Formats a list by adding numbers and a dot in front of each element.
+     *
+     * @param inputList The input list.
+     * @return The formatted list.
+     
+end note
+note right of com.example.statsify.LoggedIn::onCreateOptionsMenu(Menu)
+
+     * Inflates the menu resource file to display the options menu.
+     *
+     * @param menu The menu instance to inflate.
+     * @return true to display the menu, false otherwise.
+     
+end note
+note left of com.example.statsify.LoggedIn::onOptionsItemSelected(MenuItem)
+
+     * Handles the selection of an item from the options menu.
+     *
+     * @param item The selected menu item.
+     * @return true to indicate that the selection has been handled, false otherwise.
+     
+end note
+
+class com.example.statsify.AuthenticationHandler {
++ String BASE_URL
+- String CLIENT_ID
+- String REDIRECT_URI
+- String SCOPES
+- int REQUEST_CODE
++ <<Create>> AuthenticationHandler(String,String,String,int)
++ void openAuthentication(Activity)
+}
+note left of com.example.statsify.AuthenticationHandler::AuthenticationHandler(String,String,String,int)
+
+     * Constructs an AuthenticationHandler instance with the specified parameters.
+     *
+     * @param CLIENT_ID    The client ID of the Spotify application.
+     * @param REDIRECT_URI The redirect URI to handle the authorization response.
+     * @param SCOPES       The scopes to request during the authentication process.
+     * @param REQUEST_CODE The request code to identify the authorization request.
+     
+end note
+note right of com.example.statsify.AuthenticationHandler::openAuthentication(Activity)
+
+     * Opens the Spotify login activity to initiate the authentication flow.
+     *
+     * @param activity The activity from which the login activity will be opened.
+     
+end note
+
+
+
+com.example.statsify.OnClickListener <|.. com.example.statsify.MainActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.statsify.MainActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.statsify.Info
+android.os.AsyncTask <|-- com.example.statsify.RequestsHandler
+androidx.appcompat.app.AppCompatActivity <|-- com.example.statsify.Settings
+androidx.appcompat.app.AppCompatActivity <|-- com.example.statsify.LoggedIn
+@enduml
